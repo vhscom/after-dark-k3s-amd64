@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: after-dark-hugo-64
+  labels:
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: after-dark-hugo
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: after-dark-hugo
+        tier: backend
+    spec:
+      containers:
+      - image: tkalpakid/after-dark-themed-hugo-64-v2
+        name: after-dark-hugo-container
+        ports:
+        - containerPort: 1313
+        env:
+        - name: HUGO_WATCH # changed to real time build
+          value: "true"
+        volumeMounts:
+        - name: site-content
+          mountPath: /posts
+        - name: rendered-site
+          mountPath: /output
+        - name: repo
+          mountPath: /after-dark
+      initContainers:
+      - name: init-repo
+        image: alpine/git
+        command:
+        - git
+        - "clone"
+        - "https://git.habd.as/teowood/after-dark.git"
+        - "/after-dark/."
+        volumeMounts:
+        - name: repo
+          mountPath: /after-dark
+      volumes:
+      - name: repo
+        emptyDir: {}
+      - name: site-content
+        hostPath:
+          path: /posts
+          type: DirectoryOrCreate
+      - name: rendered-site
+        hostPath:
+          path: /rendered-site
+          type: DirectoryOrCreate

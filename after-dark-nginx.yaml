@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: after-dark-nginx
+  labels:
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: after-dark-nginx
+      tier: frontend 
+  template:
+    metadata:
+      labels:
+        app: after-dark-nginx
+        tier: frontend
+    spec:
+      containers:
+      - image: jojomi/nginx-static
+        ports:
+        - containerPort: 80
+        name: after-dark-nginx-container
+        env:
+        - name: VIRTUAL_HOST
+          value: "localhost"
+        volumeMounts:
+        - mountPath: /var/www
+          name: output
+      volumes:
+      - name: output
+        hostPath:
+      # directory location on host
+          path: /rendered-site
+      # this field is optional
+          type: Directory
