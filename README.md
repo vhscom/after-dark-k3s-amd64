@@ -1,12 +1,12 @@
 
-# After-Dark on k3s (lightweight Kubernetes by Rancher) 
+# After-Dark on k3s  
 
->## **<https://k3s.io/>**
+## [... a lightweight Kubernetes by Rancher](https://k3s.io/)
 
 ## Install K3s on your host  
 
 ``$ curl -sfL https://get.k3s.io | sh -``
-Check for Ready node, takes maybe 30 seconds
+Check for Ready node, takes maybe 30 seconds  
 ``$ kubectl get node``  
 
 ## Deploy After-Dark  
@@ -26,7 +26,7 @@ This is a multi tier deployment:
 
 ## Operate your k3s after-dark site  
 
-* First retrieve your pod name and store it in a variable for your convinience ``$ AD_POD=$(kubectl get pods -l app=after-dark-hugo -o jsonpath='{.items[0].metadata.name}')``  
+* First retrieve your pod name and store it in a variable for your convenience ``$ AD_POD=$(kubectl get pods -l app=after-dark-hugo -o jsonpath='{.items[0].metadata.name}')``  
 * Create a new post  
 ``$ kubectl exec $AD_POD -- hugo new -k post /posts/new-post.md``  or you can go ahead and copy your stuff under ``/posts`` on your host  
 * Apply custom styling  
@@ -41,8 +41,8 @@ This is a multi tier deployment:
 Locate the nodeport we exposed our nginx for after-dark  
 ``$ kubectl get svc``
 The port we are looking for is the the one next to ``8080:``
-For instance in the example below, you would point your browser to <http://your-node-IP:32146>. Ignore the Cluster-IP shown, you want the real IP of your host.
+For instance in the example below, you would point your browser to `http://your-node-IP:32146`. Ignore the Cluster-IP shown, you want the real IP of your host.
 
 | Name | Type | Cluster-IP | External-IP | Port(s) | Age |
 |--------------------|----------|---------------|-------------|----------------|-----|
-| after-dark-service | NodePort | 10.43.129.249 | <none> | 8080:32146/TCP | 1h |  
+| after-dark-service | NodePort | 10.43.129.249 | `<none>` | 8080:32146/TCP | 1h |  
