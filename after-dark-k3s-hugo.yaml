@@ -26,7 +26,7 @@ spec:
           value: "true"
         volumeMounts:
         - name: site-content
-          mountPath: /posts
+          mountPath: /my-content
         - name: rendered-site
           mountPath: /output
         - name: repo
@@ -47,7 +47,7 @@ spec:
         emptyDir: {}
       - name: site-content
         hostPath:
-          path: /posts
+          path: /my-content
           type: DirectoryOrCreate
       - name: rendered-site
         hostPath:
