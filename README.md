@@ -28,7 +28,7 @@ This is a multi tier deployment:
 
 * First retrieve your pod name and store it in a variable for your convenience ``$ AD_POD=$(kubectl get pods -l app=after-dark-hugo -o jsonpath='{.items[0].metadata.name}')``  
 * Create a new post  
-``$ kubectl exec $AD_POD -- hugo new /my-content/post/new-post.md``  or you can go ahead and copy your stuff under ``/my-content`` on your host  
+``$ kubectl exec $AD_POD -- hugo new post/new-post.md -c /my-content -d /output``  or you can go ahead and copy your stuff under ``/my-content`` on your host  
 * Apply custom styling  
 ``$ kubectl cp custom.css $AD_POD:/after-dark/flying-toasters/assets/css/custom.css``  
 * Build your draft posts  
